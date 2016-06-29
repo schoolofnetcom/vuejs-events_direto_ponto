@@ -22,7 +22,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">
-                    SON Futebol - {{name}}<img height="32" width="32" v-bind:src="{{escudo}}">
+                    SON Futebol - {{time.name}}<img height="32" width="32" v-bind:src="time.escudo">
                 </a>
             </div>
 
@@ -42,7 +42,7 @@
 
 <template id="time-list-template">
     <div class="row" v-for="o in times">
-        <div class="col-sm-6 col-md-4">
+        <a href="javascript:void(0)" class="col-sm-6 col-md-4" @click="selectTime(o)">
             <div class="thumbnail">
                 <img v-bind:src="o.escudo" height="150" width="150">
                 <div class="caption">
@@ -50,7 +50,7 @@
                     <p>{{o.pais}}</p>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
 
 </template>
@@ -63,6 +63,7 @@
         template: '#time-list-template',
         data: function () {
             return {
+                selectedTime: null,
                 times: [
                     {name: "Barcelona", pais: "Espanha", escudo: "img/barcelona.png"},
                     {name: "Bayern de Munique", pais: "Alemanha", escudo: "img/bayern.png"},
@@ -73,20 +74,16 @@
 
                 ]
             }
-        },
-        methods: {
-            notify: function () {
-                if (this.msg.trim()) {
-                    this.$dispatch('child-msg', this.msg)
-                    this.msg = ''
-                }
-            }
         }
     })
     var pai = new Vue({
         el: '#app',
-        data: {},
-
+        data: {
+            time: {
+                name: '',
+                escudo: ''
+            }
+        }
     })
 </script>
 </body>
