@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vue - Events</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+
+</head>
+<body>
+<div id="app">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">SON Futebol</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Times <span class="sr-only">(current)</span></a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container">
+        <div class="row">
+            <times-list></times-list>
+        </div>
+    </div>
+</div>
+
+<template id="time-list-template">
+    <div class="row" v-for="o in times">
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img v-bind:src="o.escudo" height="150" width="150">
+                <div class="caption">
+                    <h3>{{o.name}}</h3>
+                    <p>{{o.pais}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</template>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://npmcdn.com/vue@latest/dist/vue.js"></script>
+<script>
+    Vue.component('times-list', {
+        template: '#time-list-template',
+        data: function () {
+            return {
+                times: [
+                    {name: "Barcelona", pais: "Espanha", escudo: "img/barcelona.png"},
+                    {name: "Bayern de Munique", pais: "Alemanha", escudo: "img/bayern.png"},
+                    {name: "Benfica", pais: "Portugal", escudo: "img/benfica.png"},
+                    {name: "Juventus", pais: "Itália", escudo: "img/juventus.png"},
+                    {name: "Leicester", pais: "Inglaterra", escudo: "img/leicester.png"},
+                    {name: "PSG", pais: "França", escudo: "img/psg.jpg"},
+
+                ]
+            }
+        },
+        methods: {
+            notify: function () {
+                if (this.msg.trim()) {
+                    this.$dispatch('child-msg', this.msg)
+                    this.msg = ''
+                }
+            }
+        }
+    })
+    var pai = new Vue({
+        el: '#app',
+        data: {},
+
+    })
+</script>
+</body>
+</html>
