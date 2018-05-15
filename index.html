@@ -11,6 +11,7 @@
 </head>
 <body>
 <div id="app">
+    <button @click="changeName">Disparar evento para filhos</button>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -41,6 +42,7 @@
 </div>
 
 <template id="time-list-template">
+    <p>{{name}}</p>
     <div class="row" v-for="o in times">
         <a href="javascript:void(0)" class="col-sm-6 col-md-4" @click="selectTime(o)">
             <div class="thumbnail">
@@ -63,6 +65,7 @@
         template: '#time-list-template',
         data: function () {
             return {
+                name: '',
                 selectedTime: null,
                 times: [
                     {name: "Barcelona", pais: "Espanha", escudo: "img/barcelona.png"},
@@ -74,8 +77,20 @@
 
                 ]
             }
+        },
+        methods: {
+            selectTime: function(time){
+                this.selectedTime = time;
+                this.$dispatch('choose-time',this.selectedTime);
+            }
+        },
+        events: {
+            'choose-name': function(name){
+                this.name = name;
+            }
         }
-    })
+    });
+
     var pai = new Vue({
         el: '#app',
         data: {
@@ -83,8 +98,19 @@
                 name: '',
                 escudo: ''
             }
+        },
+        events: {
+            'choose-time': function(time){
+                this.time = time;
+            }
+        },
+        methods: {
+            changeName: function(){
+                //this.$broadcast('choose-name', 'Luiz Carlos');
+                this.$children[0].name = "Luiz Carlos";
+            }
         }
-    })
+    });
 </script>
 </body>
 </html>
